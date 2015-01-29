@@ -4,6 +4,7 @@ package gelf
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -24,18 +25,38 @@ type Message struct {
 	additional       map[string]interface{} `json:"a,omitempty"`
 }
 
+// Remote is a type for message destination configuration
+type Remote int
+
+const (
+	RemoteStdout Remote = iota
+	RemoteUdp
+)
+
 var reservedFields = []string{"version", "host", "short_message", "full_message", "timestamp", "level", "_id"}
 
-// NewMessage returns a new Graylog2 Extended Log Format message.
-func NewMessage(l Level, short string, full string) *Message {
-	var host string
+var host = ""
+var remote Remote
 
-	a := make(map[string]interface{})
+func Init(r Remote) (err error) {
+	if r == RemoteStdout {
+		remote = r
+	} else if r == RemoteUdp {
+		return errors.New("UDP not yet implemented")
+	} else {
+		return errors.New("Invalid GELF remote")
+	}
 
-	host, err := os.Hostname()
+	host, err = os.Hostname()
 	if err != nil {
 		host = "localhost"
 	}
+	return err
+}
+
+// NewMessage returns a new Graylog2 Extended Log Format message.
+func NewMessage(l Level, short string, full string) *Message {
+	a := make(map[string]interface{})
 
 	return &Message{
 		Version:      GELFVersion,
@@ -97,4 +118,13 @@ func (m *Message) String() string {
 	trimBaseMessageFields := strings.TrimRight(string(baseMessageFields), "}")
 
 	return trimBaseMessageFields + "," + filteredFields
+}
+
+// Send will currently print message's string to STDOUT
+func (m *Message) Send() {
+	if remote == RemoteStdout {
+		fmt.Print(m.String())
+	} else if remote == RemoteUdp {
+		// TODO: implement UDP
+	}
 }
