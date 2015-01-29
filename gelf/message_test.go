@@ -8,7 +8,6 @@ import (
 )
 
 func TestAdditionalFields(t *testing.T) {
-	Init(RemoteStdout)
 	testMessage := NewMessage(LevelInfo, "This is a short test message.", "This is a long test message.\nIt includes multiple lines.")
 
 	testMessage.Add("_StringType", "This is a string.")
@@ -18,7 +17,6 @@ func TestAdditionalFields(t *testing.T) {
 }
 
 func TestInvalidFieldNames(t *testing.T) {
-	Init(RemoteStdout)
 	testMessage := NewMessage(LevelInfo, "This is a short test message.", "This is a long test message.\nIt includes multiple lines.")
 
 	testMessage.Add("_id", "This is an invalid additional field.")
@@ -30,7 +28,6 @@ func TestInvalidFieldNames(t *testing.T) {
 }
 
 func BenchmarkMessageCreation(b *testing.B) {
-	Init(RemoteStdout)
 	for i := 0; i < b.N; i++ {
 		NewMessage(LevelInfo, "This is a short test message.", "This is a long test message.")
 	}

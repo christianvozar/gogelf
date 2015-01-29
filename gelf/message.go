@@ -38,7 +38,17 @@ var reservedFields = []string{"version", "host", "short_message", "full_message"
 var host = ""
 var remote Remote
 
-func Init(r Remote) (err error) {
+func init() {
+	remote = RemoteStdout
+
+	var err error
+	host, err = os.Hostname()
+	if err != nil {
+		host = "localhost"
+	}
+}
+
+func SetRemote(r Remote) (err error) {
 	if r == RemoteStdout {
 		remote = r
 	} else if r == RemoteUdp {
@@ -46,12 +56,7 @@ func Init(r Remote) (err error) {
 	} else {
 		return errors.New("Invalid GELF remote")
 	}
-
-	host, err = os.Hostname()
-	if err != nil {
-		host = "localhost"
-	}
-	return err
+	return nil
 }
 
 // NewMessage returns a new Graylog2 Extended Log Format message.
