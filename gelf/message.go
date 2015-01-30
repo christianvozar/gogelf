@@ -128,7 +128,7 @@ func (m *Message) String() string {
 // Send will currently print message's string to STDOUT
 func (m *Message) Send() {
 	if remote == RemoteStdout {
-		fmt.Print(m.String())
+		fmt.Printf("%s\n", m.String())
 	} else if remote == RemoteUdp {
 		// TODO: implement UDP
 	}
