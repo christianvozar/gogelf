@@ -20,55 +20,55 @@ const (
 // Panic generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 0.
 // System is unusable.
-func Panic(s, l string) {
-	NewMessage(LevelPanic, s, l).Send()
+func Panic(s, l string) *Message {
+	return NewMessage(LevelPanic, s, l)
 }
 
 // Alert generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 1.
 // Action must be taken immediately.
-func Alert(s, l string) {
-	NewMessage(LevelAlert, s, l).Send()
+func Alert(s, l string) *Message {
+	return NewMessage(LevelAlert, s, l)
 }
 
 // Crit generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 2.
 // Critical conditions.
-func Crit(s, l string) {
-	NewMessage(LevelCritical, s, l).Send()
+func Crit(s, l string) *Message {
+	return NewMessage(LevelCritical, s, l)
 }
 
 // Error generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 3.
 // Error conditions.
-func Error(s, l string) {
-	NewMessage(LevelError, s, l).Send()
+func Error(s, l string) *Message {
+	return NewMessage(LevelError, s, l)
 }
 
 // Warn generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 4.
 // Warning conditions.
-func Warn(s, l string) {
-	NewMessage(LevelWarning, s, l).Send()
+func Warn(s, l string) *Message {
+	return NewMessage(LevelWarning, s, l)
 }
 
 // Notice generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 5.
 // Normal but significant condition.
-func Notice(s, l string) {
-	NewMessage(LevelNotice, s, l).Send()
+func Notice(s, l string) *Message {
+	return NewMessage(LevelNotice, s, l)
 }
 
 // Info generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 6.
 // Informational messages.
-func Info(s, l string) {
-	NewMessage(LevelInfo, s, l).Send()
+func Info(s, l string) *Message {
+	return NewMessage(LevelInfo, s, l)
 }
 
 // Debug generates a Graylog2 Extended Format message with a RFC5424 severity
 // code of 7.
 // Developer debug messages.
-func Debug(s, l string) {
-	NewMessage(LevelDebug, s, l).Send()
+func Debug(s, l string) *Message {
+	return NewMessage(LevelDebug, s, l)
 }
